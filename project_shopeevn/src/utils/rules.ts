@@ -1,10 +1,10 @@
-import { RegisterOptions } from "react-hook-form";
+import { RegisterOptions, UseFormGetValues } from "react-hook-form";
 
 type Rules = {
   [key in "email" | "password" | "confirm_password"]?: RegisterOptions;
 };
 
-export const rules: Rules = {
+export const getRules = (getValues?: UseFormGetValues<any>): Rules => ({
   email: {
     required: {
       value: true,
@@ -35,7 +35,7 @@ export const rules: Rules = {
     },
     maxLength: {
       value: 160,
-      message: "Mật khẩu dài nhất là 160 kí tư!",
+      message: "Mật khẩu dài nhất là 160 kí tự!",
     },
   },
   // Confirm_password
@@ -50,7 +50,11 @@ export const rules: Rules = {
     },
     maxLength: {
       value: 160,
-      message: "Mật khẩu dài nhất là 160 kí tư!",
+      message: "Mật khẩu dài nhất là 160 kí tự!",
     },
+    validate:
+      typeof getValues === "function"
+        ? (value) => value === getValues("password") || "Mật khẩu không khớp!"
+        : undefined,
   },
-};
+});

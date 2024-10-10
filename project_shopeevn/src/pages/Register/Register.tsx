@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import Background from "../../assets/img/bg_login_register.jpg";
 import { useForm } from "react-hook-form";
-import { rules } from "../../utils/rules";
+import { getRules } from "../../utils/rules";
 
 interface FormData {
   email: string;
@@ -13,13 +13,24 @@ export default function Register() {
   const {
     register,
     handleSubmit,
+    watch,
+    getValues,
     formState: { errors },
   } = useForm<FormData>();
 
-  const onSubmit = handleSubmit((data) => {
-    console.log(data);
-  });
-  console.log("Lỗi ở đây này cụ", errors);
+  const rules = getRules(getValues);
+
+  const onSubmit = handleSubmit(
+    (data) => {
+      // console.log(data);
+    },
+    (data) => {
+      const password = getValues("password");
+      console.log(password);
+    }
+  );
+
+  // console.log("Lỗi ở đây này cụ", errors);
 
   return (
     <div
@@ -32,6 +43,7 @@ export default function Register() {
             <form
               className="p-10 rounded bg-white shadow-sm"
               onSubmit={onSubmit}
+              noValidate
             >
               <div className="text-2xl">Đăng Ký</div>
               <div className="mt-8">
@@ -51,6 +63,7 @@ export default function Register() {
                   type="password"
                   className="p-3 w-full outline-none border border-gray-300 focus:border-gray-500 rounded-sm focus:shadow-sm"
                   placeholder="Mật Khẩu"
+                  autoComplete="on"
                   {...register("password", rules.password)}
                 />
               </div>
@@ -63,9 +76,13 @@ export default function Register() {
                   type="password"
                   className="p-3 w-full outline-none border border-gray-300 focus:border-gray-500 rounded-sm focus:shadow-sm"
                   placeholder="Nhập Lại Mật Khẩu"
-                  {...register("confirm_password", rules.confirm_password)}
+                  autoComplete="on"
+                  {...register("confirm_password", {
+                    ...rules.confirm_password,
+                  })}
                 />
               </div>
+
               <div className="mt-2 text-red-600 min-h-[1.25rem].text0-sm">
                 {errors.confirm_password?.message}
               </div>
