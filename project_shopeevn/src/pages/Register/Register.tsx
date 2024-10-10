@@ -4,6 +4,10 @@ import { useForm } from "react-hook-form";
 import Input from "../../components/Input";
 import { schema } from "../../utils/rules";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useMutation } from "@tanstack/react-query";
+import { registerAccount } from "../../apis/auth.api";
+import { Schema } from "yup";
+import { omit } from "lodash";
 
 
 // interface FormData {
@@ -11,6 +15,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 //   password: string;
 //   confirm_password: string;
 // }
+type FormData = Schema
 
 export default function Register() {
   const {
@@ -21,11 +26,19 @@ export default function Register() {
     resolver: yupResolver(schema)
   });
 
-  const onSubmit = handleSubmit(
-    (data) => {
-      console.log(data);
-    },
-  );
+  const registerAccountMutation = useMutation({
+    mutationFn: (body: Omit<FormData, 'confirm_password'>) => registerAccount(body)
+  })
+
+  const onSubmit = handleSubmit((data) => {
+    const body = omit(data,['confirm_password'])
+    registerAccountMutation.mutate(body,{
+      onSuccess: (data) => {
+        console.log(data);
+      }
+    })
+  })
+
   // console.log("Lỗi ở đây này cụ", errors);
 
   return (
