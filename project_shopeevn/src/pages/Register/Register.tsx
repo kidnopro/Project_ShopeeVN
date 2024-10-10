@@ -1,35 +1,31 @@
 import { Link } from "react-router-dom";
 import Background from "../../assets/img/bg_login_register.jpg";
 import { useForm } from "react-hook-form";
-import { getRules } from "../../utils/rules";
+import Input from "../../components/Input";
+import { schema } from "../../utils/rules";
+import { yupResolver } from "@hookform/resolvers/yup";
 
-interface FormData {
-  email: string;
-  password: string;
-  confirm_password: string;
-}
+
+// interface FormData {
+//   email: string;
+//   password: string;
+//   confirm_password: string;
+// }
 
 export default function Register() {
   const {
     register,
     handleSubmit,
-    watch,
-    getValues,
     formState: { errors },
-  } = useForm<FormData>();
-
-  const rules = getRules(getValues);
+  } = useForm<FormData>({
+    resolver: yupResolver(schema)
+  });
 
   const onSubmit = handleSubmit(
     (data) => {
-      // console.log(data);
+      console.log(data);
     },
-    (data) => {
-      const password = getValues("password");
-      console.log(password);
-    }
   );
-
   // console.log("Lỗi ở đây này cụ", errors);
 
   return (
@@ -46,46 +42,35 @@ export default function Register() {
               noValidate
             >
               <div className="text-2xl">Đăng Ký</div>
-              <div className="mt-8">
-                <input
-                  type="email"
-                  className="p-3 w-full outline-none border border-gray-300 focus:border-gray-500 rounded-sm focus:shadow-sm"
-                  placeholder="Email"
-                  {...register("email", rules.email)}
+              <Input
+                name = 'email'
+                register={register}
+                type = 'email'
+                className="mt-8"
+                errorMessage= {errors.email?.message}
+                placeholder="Email"
+               
                 />
-              </div>
-              <div className="mt-2 text-red-600 min-h-[1.25rem].text0-sm">
-                {errors.email?.message}
-              </div>
               {/* Kết thúc input */}
-              <div className="mt-4">
-                <input
-                  type="password"
-                  className="p-3 w-full outline-none border border-gray-300 focus:border-gray-500 rounded-sm focus:shadow-sm"
-                  placeholder="Mật Khẩu"
-                  autoComplete="on"
-                  {...register("password", rules.password)}
+              <Input
+                name = 'password'
+                register={register}
+                type = 'password'
+                className="mt-4"
+                errorMessage= {errors.password?.message}
+                placeholder="Mật khẩu"
+                
                 />
-              </div>
-              <div className="mt-2 text-red-600 min-h-[1.25rem].text0-sm">
-                {errors.password?.message}
-              </div>
               {/* Kết thúc input */}
-              <div className="mt-4">
-                <input
-                  type="password"
-                  className="p-3 w-full outline-none border border-gray-300 focus:border-gray-500 rounded-sm focus:shadow-sm"
-                  placeholder="Nhập Lại Mật Khẩu"
-                  autoComplete="on"
-                  {...register("confirm_password", {
-                    ...rules.confirm_password,
-                  })}
+              <Input
+                name = 'confirm_password'
+                register={register}
+                type = 'password'
+                className="mt-4"
+                errorMessage= {errors.confirm_password?.message}
+                placeholder="Nhập lại mật khẩu"
+               
                 />
-              </div>
-
-              <div className="mt-2 text-red-600 min-h-[1.25rem].text0-sm">
-                {errors.confirm_password?.message}
-              </div>
               {/* Nút button */}
               <div className="mt-4">
                 <button className="w-full text-center py-4 px-2 uppercase bg-red-500 text-white text-sm hover:bg-red-600">

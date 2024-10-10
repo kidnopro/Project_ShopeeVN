@@ -11,7 +11,7 @@ export default function RegisterHeader() {
           </Link>
 
           <div className="ml-5 text-xl lg:text-2xl flex items-center h-full">
-            {/* cmt tạm */}
+            Đăng Ký
           </div>
         </nav>
 
