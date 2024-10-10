@@ -34,7 +34,7 @@ export default function Register() {
         console.log(data);
       },
       onError: (error) => {
-        if (isAxiosUnprocessableEntityError<ErrorResponse<Omit<FormData, 'confirm_password'>>>(error)) {
+        if (isAxiosUnprocessableEntityError<ResponseApi<Omit<FormData, 'confirm_password'>>>(error)) {
          const formError = error.response?.data.data
         if(formError) {
           Object.keys(formError).forEach(key => {
@@ -44,18 +44,6 @@ export default function Register() {
             })
           })
         }
-        //  if(formError?.email) {
-        //   setError('email', {
-        //     message: formError.email,
-        //     type: 'Server'
-        //   })
-        //  }
-        //  if(formError?.password) {
-        //   setError('password', {
-        //     message: formError.password,
-        //     type: 'Server'
-        //   })
-        //  }
         }
       }
     })
