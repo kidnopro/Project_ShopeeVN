@@ -7,6 +7,3 @@ export type AuthReponse = ReponseApi<{
      user: User
 }>
 
-const auth = AuthResponse = {
-     
-}
