@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Popover from "../Popover";
+import { div } from "framer-motion/client";
 
 export default function Header() {
   const [placeholder, setPlaceholder] = useState(
@@ -140,24 +141,130 @@ export default function Header() {
             </button>
           </div>
         </form>
-        <div className="cols-span-1">
-          <Link to="/" className="">
-            {" "}
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              className="size-9"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"
-              />
-            </svg>
-          </Link>
+        <div className="cols-span-1 justify-self-end">
+          <Popover
+            renderPopover={
+              <div className="bg-white relative shadow-md rounded-sm border border-gray-200 max-w-[400px] min-w-[300px] text-sm">
+                <div className="p-2">
+                  <div className="text-gray-400 capitalize">
+                    Sản phẩm mới thêm
+                  </div>
+                  <div className="mt-5">
+                    <div className="mt-4 flex">
+                      <div className="flex-shrink-0">
+                        <img
+                          src="https://toanthaydinh.com/wp-content/uploads/2020/04/hinh-em-be-de-thuong-35.jpg"
+                          alt=""
+                          className="w-5"
+                        />
+                      </div>
+                      <div className="flex-grow ml-2 overflow-hidden">
+                        <div className="truncate">Em bé ngoan xinh yêu</div>
+                      </div>
+                      <div className="ml-2 flex-shrink-0">
+                        <span className="text-orange-500">$473</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="mt-5">
+                    <div className="mt-4 flex">
+                      <div className="flex-shrink-0">
+                        <img
+                          src="https://toanthaydinh.com/wp-content/uploads/2020/04/hinh-em-be-de-thuong-35.jpg"
+                          alt=""
+                          className="w-5"
+                        />
+                      </div>
+                      <div className="flex-grow ml-2 overflow-hidden">
+                        <div className="truncate">Em bé ngoan xinh yêu</div>
+                      </div>
+                      <div className="ml-2 flex-shrink-0">
+                        <span className="text-orange-500">$473</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="mt-5">
+                    <div className="mt-4 flex">
+                      <div className="flex-shrink-0">
+                        <img
+                          src="https://toanthaydinh.com/wp-content/uploads/2020/04/hinh-em-be-de-thuong-35.jpg"
+                          alt=""
+                          className="w-5"
+                        />
+                      </div>
+                      <div className="flex-grow ml-2 overflow-hidden">
+                        <div className="truncate">Em bé ngoan xinh yêu</div>
+                      </div>
+                      <div className="ml-2 flex-shrink-0">
+                        <span className="text-orange-500">$473</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="mt-5">
+                    <div className="mt-4 flex">
+                      <div className="flex-shrink-0">
+                        <img
+                          src="https://toanthaydinh.com/wp-content/uploads/2020/04/hinh-em-be-de-thuong-35.jpg"
+                          alt=""
+                          className="w-5"
+                        />
+                      </div>
+                      <div className="flex-grow ml-2 overflow-hidden">
+                        <div className="truncate">Em bé ngoan xinh yêu</div>
+                      </div>
+                      <div className="ml-2 flex-shrink-0">
+                        <span className="text-orange-500">$473</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="mt-5">
+                    <div className="mt-4 flex">
+                      <div className="flex-shrink-0">
+                        <img
+                          src="https://toanthaydinh.com/wp-content/uploads/2020/04/hinh-em-be-de-thuong-35.jpg"
+                          alt=""
+                          className="w-5"
+                        />
+                      </div>
+                      <div className="flex-grow ml-2 overflow-hidden">
+                        <div className="truncate">Em bé ngoan xinh yêu</div>
+                      </div>
+                      <div className="ml-2 flex-shrink-0">
+                        <span className="text-orange-500">$473</span>
+                      </div>
+                    </div>
+                  </div>
+                  {/* nút button */}
+                  <div className="flex mt-6 items-center justify-between">
+                    <div className="capitalize text-xs text-gray-400">
+                      Thêm vào giỏ hàng
+                    </div>
+                    <button className="capitalize bg-orange-500 hover:bg-opacity-80 px-4 py-2 rounded-sm text-white">
+                      Xem giỏ hàng
+                    </button>
+                  </div>
+                </div>
+              </div>
+            }
+          >
+            <Link to="/" className="">
+              {" "}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                className="size-9 "
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"
+                />
+              </svg>
+            </Link>
+          </Popover>
         </div>
       </div>
     </div>
