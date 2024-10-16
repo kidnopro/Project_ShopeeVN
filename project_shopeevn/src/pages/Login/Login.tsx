@@ -2,52 +2,53 @@ import { Link } from "react-router-dom";
 import Background from "../../assets/img/bg_login_register.jpg";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { schema,Schema } from "../../utils/rules";
+import { schema, Schema } from "../../utils/rules";
 import { useMutation } from "@tanstack/react-query";
 import { isAxiosUnprocessableEntityError } from "../../utils/utils";
 import { login } from "../../apis/auth.api";
 import Input from "../../components/Input";
+import { ErrorResponse } from "../../types/utils.type";
 
+type FormData = Omit<Schema, "confirm_password">;
 
-
-type FormData = Omit<Schema,'confirm_password'>
-
-const loginSchema = schema.omit(['confirm_password'])
+const loginSchema = schema.omit(["confirm_password"]);
 export default function Login() {
   const {
     register,
     setError,
     handleSubmit,
     formState: { errors },
+    watch,
   } = useForm<FormData>({
-    resolver : yupResolver(loginSchema)
+    resolver: yupResolver(loginSchema),
   });
 
   const loginMutation = useMutation({
-    mutationFn: (body: Omit<FormData, 'confirm_password'>) => login(body)
-  })
+    mutationFn: (body: Omit<FormData, "confirm_password">) => login(body),
+  });
 
   const onSubmit = handleSubmit((data) => {
-    loginMutation.mutate(data,{
+    loginMutation.mutate(data, {
       onSuccess: (data) => {
         console.log(data);
       },
       onError: (error) => {
-        if (isAxiosUnprocessableEntityError<ResponseApi<FormData>(error)) {
-         const formError = error.response?.data.data
-        if(formError) {
-          Object.keys(formError).forEach(key => {
-            setError(key as  keyof Omit<FormData,'confirm_password'>, {
-              message: formError[key as keyof FormData],
-              type: 'Server'
-            })
-          })
+        if (isAxiosUnprocessableEntityError < ErrorResponse<FormData>(error)) {
+          const formError = error.response?.data.data;
+          if (formError) {
+            Object.keys(formError).forEach((key) => {
+              setError(key as keyof FormData, {
+                message: formError[key as keyof FormData],
+                type: "Server",
+              });
+            });
+          }
         }
-        }
-      }
-    })
-  })
-
+      },
+    });
+  });
+  const value = watch();
+  console.log(value, errors);
 
   return (
     <div
@@ -64,24 +65,22 @@ export default function Login() {
             >
               <div className="text-2xl">Đăng Nhập</div>
               <Input
-                name = 'email'
+                name="email"
                 register={register}
-                type = 'email'
+                type="email"
                 className="mt-8"
-                errorMessage= {errors.email?.message}
+                errorMessage={errors.email?.message}
                 placeholder="Email"
-               
-                />
+              />
               {/* Kết thúc input */}
               <Input
-                name = 'password'
+                name="password"
                 register={register}
-                type = 'password'
+                type="password"
                 className="mt-4"
-                errorMessage= {errors.password?.message}
+                errorMessage={errors.password?.message}
                 placeholder="Mật khẩu"
-                
-                />
+              />
               {/* Nút button */}
               <div className="mt-4">
                 <button

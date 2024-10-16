@@ -1,4 +1,4 @@
-import { ErrorResponse, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Background from "../../assets/img/bg_login_register.jpg";
 import { useForm } from "react-hook-form";
 import Input from "../../components/Input";
@@ -9,9 +9,8 @@ import { registerAccount } from "../../apis/auth.api";
 import { Schema } from "yup";
 import { omit } from "lodash";
 import { isAxiosUnprocessableEntityError } from "../../utils/utils";
-
-
-type FormData = Schema
+import { ErrorResponse } from "../../types/utils.type";
+type FormData = Schema;
 
 export default function Register() {
   const {
@@ -20,34 +19,40 @@ export default function Register() {
     setError,
     formState: { errors },
   } = useForm<FormData>({
-    resolver: yupResolver(schema)
+    resolver: yupResolver(schema),
   });
 
   const registerAccountMutation = useMutation({
-    mutationFn: (body: Omit<FormData, 'confirm_password'>) => registerAccount(body)
-  })
+    mutationFn: (body: Omit<FormData, "confirm_password">) =>
+      registerAccount(body),
+  });
 
   const onSubmit = handleSubmit((data) => {
-    const body = omit(data,['confirm_password'])
-    registerAccountMutation.mutate(body,{
+    const body = omit(data, ["confirm_password"]);
+    registerAccountMutation.mutate(body, {
       onSuccess: (data) => {
         console.log(data);
       },
       onError: (error) => {
-        if (isAxiosUnprocessableEntityError<ResponseApi<Omit<FormData, 'confirm_password'>>>(error)) {
-         const formError = error.response?.data.data
-        if(formError) {
-          Object.keys(formError).forEach(key => {
-            setError(key as  keyof Omit<FormData,'confirm_password'>, {
-              message: formError[key as keyof Omit<FormData,'confirm_password'>],
-              type: 'Server'
-            })
-          })
+        if (
+          isAxiosUnprocessableEntityError<
+            ErrorResponse<Omit<FormData, "confirm_password">>
+          >(error)
+        ) {
+          const formError = error.response?.data.data;
+          if (formError) {
+            Object.keys(formError).forEach((key) => {
+              setError(key as keyof Omit<FormData, "confirm_password">, {
+                message:
+                  formError[key as keyof Omit<FormData, "confirm_password">],
+                type: "Server",
+              });
+            });
+          }
         }
-        }
-      }
-    })
-  })
+      },
+    });
+  });
 
   // console.log("Lỗi ở đây này cụ", errors);
 
@@ -66,34 +71,31 @@ export default function Register() {
             >
               <div className="text-2xl">Đăng Ký</div>
               <Input
-                name = 'email'
+                name="email"
                 register={register}
-                type = 'email'
+                type="email"
                 className="mt-8"
-                errorMessage= {errors.email?.message}
+                errorMessage={errors.email?.message}
                 placeholder="Email"
-               
-                />
+              />
               {/* Kết thúc input */}
               <Input
-                name = 'password'
+                name="password"
                 register={register}
-                type = 'password'
+                type="password"
                 className="mt-4"
-                errorMessage= {errors.password?.message}
+                errorMessage={errors.password?.message}
                 placeholder="Mật khẩu"
-                
-                />
+              />
               {/* Kết thúc input */}
               <Input
-                name = 'confirm_password'
+                name="confirm_password"
                 register={register}
-                type = 'password'
+                type="password"
                 className="mt-4"
-                errorMessage= {errors.confirm_password?.message}
+                errorMessage={errors.confirm_password?.message}
                 placeholder="Nhập lại mật khẩu"
-               
-                />
+              />
               {/* Nút button */}
               <div className="mt-4">
                 <button className="w-full text-center py-4 px-2 uppercase bg-red-500 text-white text-sm hover:bg-red-600">
