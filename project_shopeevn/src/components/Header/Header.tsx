@@ -4,7 +4,7 @@ import Popover from "../Popover";
 import { useMutation } from "@tanstack/react-query";
 import { logout } from "../../apis/auth.api";
 import { AppContext } from "../../contexts/app.context";
-
+import path from "../../constants/path";
 
 export default function Header() {
   const [placeholder, setPlaceholder] = useState(
@@ -27,12 +27,14 @@ export default function Header() {
     return () => clearInterval(interval);
   }, []);
   // kết thúc đoạn này
-  const { setIsAuthenticated, isAuthenticated } = useContext(AppContext);
+  const { setIsAuthenticated, isAuthenticated, setProfile, profile } =
+    useContext(AppContext);
 
   const logoutMutation = useMutation({
     mutationFn: logout,
     onSuccess: () => {
       setIsAuthenticated(false);
+      setProfile(null);
     },
   });
   const handeLogout = () => {
@@ -93,7 +95,7 @@ export default function Header() {
               renderPopover={
                 <div className="">
                   <Link
-                    to="/profile"
+                    to={path.profile}
                     className="block py-2 px-3 bg-white hover:text-orange-500 w-full"
                   >
                     Tài khoản của tôi
@@ -120,16 +122,22 @@ export default function Header() {
                   alt=""
                 />
               </div>
-              <div>hoanganhcuto</div>
+              <div>{profile?.email}</div>
             </Popover>
           )}
           {!isAuthenticated && (
             <div className="flex items-center">
-              <Link to="/register" className="mx-3 capitalize hover:text-white">
+              <Link
+                to={path.register}
+                className="mx-3 capitalize hover:text-white"
+              >
                 Đăng ký
               </Link>
               <div className="border-r-[1px] border-r-while/40 h-4"></div>
-              <Link to="/login" className="mx-3 capitalize hover:text-white">
+              <Link
+                to={path.login}
+                className="mx-3 capitalize hover:text-white"
+              >
                 Đăng nhập
               </Link>
             </div>
