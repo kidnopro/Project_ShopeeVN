@@ -1,7 +1,9 @@
-import { Link } from "react-router-dom";
+import { Link, useMatch } from "react-router-dom";
 import logo from "../../assets/img/logoshopee.svg";
 
 export default function RegisterHeader() {
+  const registerMatch = useMatch("/register");
+  const isRegister = Boolean(registerMatch);
   return (
     <header className="py-5 h-24 bg-white-400">
       <div className="max-w-7xl mx-auto flex justify-between items-center h-full px-4">
@@ -11,7 +13,7 @@ export default function RegisterHeader() {
           </Link>
 
           <div className="ml-5 text-xl lg:text-2xl flex items-center h-full">
-            Đăng Ký
+            {isRegister ? "Đăng Ký" : "Đăng Nhập"}
           </div>
         </nav>
 

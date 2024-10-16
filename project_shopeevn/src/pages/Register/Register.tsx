@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Background from "../../assets/img/bg_login_register.jpg";
 import { useForm } from "react-hook-form";
 import Input from "../../components/Input";
@@ -10,9 +10,13 @@ import { Schema } from "yup";
 import { omit } from "lodash";
 import { isAxiosUnprocessableEntityError } from "../../utils/utils";
 import { ErrorResponse } from "../../types/utils.type";
+import { useContext } from "react";
+import { AppContext } from "../../contexts/app.context";
 type FormData = Schema;
 
 export default function Register() {
+  const { setIsAuthenticated } = useContext(AppContext);
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -30,8 +34,9 @@ export default function Register() {
   const onSubmit = handleSubmit((data) => {
     const body = omit(data, ["confirm_password"]);
     registerAccountMutation.mutate(body, {
-      onSuccess: (data) => {
-        console.log(data);
+      onSuccess: () => {
+        setIsAuthenticated(true);
+        navigate("/");
       },
       onError: (error) => {
         if (

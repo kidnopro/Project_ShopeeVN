@@ -1,6 +1,9 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Popover from "../Popover";
+import { useMutation } from "@tanstack/react-query";
+import { logout } from "../../apis/auth.api";
+import { AppContext } from "../../contexts/app.context";
 import { div } from "framer-motion/client";
 
 export default function Header() {
@@ -23,7 +26,18 @@ export default function Header() {
 
     return () => clearInterval(interval);
   }, []);
+  // kết thúc đoạn này
+  const { setIsAuthenticated, isAuthenticated } = useContext(AppContext);
 
+  const logoutMutation = useMutation({
+    mutationFn: logout,
+    onSuccess: () => {
+      setIsAuthenticated(false);
+    },
+  });
+  const handeLogout = () => {
+    logoutMutation.mutate();
+  };
   return (
     <div className="bg-[linear-gradient(-180deg,#f53d2d,#f63)] pb-5 pt-3 text-white">
       <div className="container">
@@ -73,37 +87,53 @@ export default function Header() {
               />
             </svg>
           </Popover>
-          <Popover
-            className="flex items-center py-1 hover:text-gray-300 cursor-pointer ml-6"
-            renderPopover={
-              <div className="">
-                <Link
-                  to="/profile"
-                  className="block py-2 px-3 bg-white hover:text-orange-500 w-full"
-                >
-                  Tài khoản của tôi
-                </Link>
-                <Link
-                  to="/"
-                  className="block py-2 px-3 bg-white hover:text-orange-500 w-full"
-                >
-                  Đơn mua
-                </Link>
-                <button className="block py-2 px-3 bg-white hover:text-orange-500 w-full text-left">
-                  Đăng xuất
-                </button>
+          {isAuthenticated && (
+            <Popover
+              className="flex items-center py-1 hover:text-gray-300 cursor-pointer ml-6"
+              renderPopover={
+                <div className="">
+                  <Link
+                    to="/profile"
+                    className="block py-2 px-3 bg-white hover:text-orange-500 w-full"
+                  >
+                    Tài khoản của tôi
+                  </Link>
+                  <Link
+                    to="/"
+                    className="block py-2 px-3 bg-white hover:text-orange-500 w-full"
+                  >
+                    Đơn mua
+                  </Link>
+                  <button
+                    onClick={handeLogout}
+                    className="block py-2 px-3 bg-white hover:text-orange-500 w-full text-left"
+                  >
+                    Đăng xuất
+                  </button>
+                </div>
+              }
+            >
+              <div className="w-6 h-6 mr-2 flex-shrink-0">
+                <img
+                  className="w-full h-full object-cover rounded-full"
+                  src="https://cdn.24h.com.vn/upload/4-2020/images/2020-10-25/Thien-than-sexy-phim-18--la-yua-mikami-4-1603597572-474-width660height616.jpg"
+                  alt=""
+                />
               </div>
-            }
-          >
-            <div className="w-6 h-6 mr-2 flex-shrink-0">
-              <img
-                className="w-full h-full object-cover rounded-full"
-                src="https://cdn.24h.com.vn/upload/4-2020/images/2020-10-25/Thien-than-sexy-phim-18--la-yua-mikami-4-1603597572-474-width660height616.jpg"
-                alt=""
-              />
+              <div>hoanganhcuto</div>
+            </Popover>
+          )}
+          {!isAuthenticated && (
+            <div className="flex items-center">
+              <Link to="/register" className="mx-3 capitalize hover:text-white">
+                Đăng ký
+              </Link>
+              <div className="border-r-[1px] border-r-while/40 h-4"></div>
+              <Link to="/login" className="mx-3 capitalize hover:text-white">
+                Đăng nhập
+              </Link>
             </div>
-            <div>hoanganhcuto</div>
-          </Popover>
+          )}
           <div className="flex items-center py-1 hover:text-gray-300 cursor-pointer ml-6 mr-4"></div>
         </div>
       </div>
