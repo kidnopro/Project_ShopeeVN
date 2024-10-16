@@ -10,6 +10,7 @@ import Input from "../../components/Input";
 import { ErrorResponse } from "../../types/utils.type";
 import { useContext } from "react";
 import { AppContext } from "../../contexts/app.context";
+import Button from "../../components/Button";
 
 type FormData = Omit<Schema, "confirm_password">;
 
@@ -86,12 +87,14 @@ export default function Login() {
               />
               {/* Nút button */}
               <div className="mt-4">
-                <button
+                <Button
                   type="submit"
-                  className="w-full text-center py-4 px-2 uppercase bg-red-500 text-white text-sm hover:bg-red-600"
+                  className="flex w-full items-center justify-center bg-red-500 py-4 px-2 text-sm uppercase text-white hover:bg-red-600"
+                  isLoading={loginMutation.isLoading}
+                  disabled={loginMutation.isLoading}
                 >
-                  đăng nhập
-                </button>
+                  Đăng nhập
+                </Button>
               </div>
               <div className="mt-4 flex bg-center justify-center">
                 <p className="text-gray-400">Bạn chưa có tài khoản?</p>

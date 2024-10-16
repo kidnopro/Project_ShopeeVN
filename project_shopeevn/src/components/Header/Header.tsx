@@ -4,7 +4,7 @@ import Popover from "../Popover";
 import { useMutation } from "@tanstack/react-query";
 import { logout } from "../../apis/auth.api";
 import { AppContext } from "../../contexts/app.context";
-import { div } from "framer-motion/client";
+
 
 export default function Header() {
   const [placeholder, setPlaceholder] = useState(
