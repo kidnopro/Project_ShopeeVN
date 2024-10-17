@@ -1,31 +1,37 @@
-import type {RegisterOptions, UseFormRegister} from 'react-hook-form'
+import { InputHTMLAttributes } from "react";
+import type { RegisterOptions, UseFormRegister } from "react-hook-form";
 
-
-interface Props{
-     type: React.HTMLInputTypeAttribute
-     errorMessage?: string
-     placeholder?: string
-     className?: string
-     name: string
-     register: UseFormRegister<any>
-     rules?: RegisterOptions
-     
+interface Props extends InputHTMLAttributes<HTMLInputElement> {
+  errorMessage?: string;
+  classNameInput?: string;
+  classNameError?: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  register: UseFormRegister<any>;
+  rules?: RegisterOptions;
 }
 
-
-export default function Input(  {type,errorMessage,placeholder,className,name,register,rules}:Props  ) {
+export default function Input({
+  type,
+  errorMessage,
+  placeholder,
+  className,
+  name,
+  register,
+  rules,
+  classNameInput = "p-3 w-full outline-none border border-gray-300 focus:border-gray-500 rounded-sm focus:shadow-sm",
+  classNameError = "mt-2 text-red-600 min-h-[1.25rem].text0-sm",
+}: Props) {
+  const registerResult = register && name ? register(name, rules) : {};
   return (
-     <div className= {className}>
-     <input
-       type={type}
-       className="p-3 w-full outline-none border border-gray-300 focus:border-gray-500 rounded-sm focus:shadow-sm"
-       placeholder= {placeholder}
-       {...register(name, rules)}
-     />
-   
-   <div className="mt-2 text-red-600 min-h-[1.25rem].text0-sm">
-     {errorMessage}
-   </div>
-</div>
-  )
+    <div className={className}>
+      <input
+        type={type}
+        className={classNameInput}
+        placeholder={placeholder}
+        {...registerResult}
+      />
+
+      <div className={classNameError}>{errorMessage}</div>
+    </div>
+  );
 }

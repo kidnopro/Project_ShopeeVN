@@ -1,8 +1,6 @@
 import Footer from "../../components/Footer";
 import Header from "../../components/Header/Header";
-
-
-
+import Banner from "../../pages/Banner";
 
 interface Props {
   children?: React.ReactNode;
@@ -11,7 +9,8 @@ interface Props {
 export default function MainLayout({ children }: Props) {
   return (
     <div>
-     <Header/>
+      <Header />
+      <Banner />
       {children}
       <Footer />
     </div>
