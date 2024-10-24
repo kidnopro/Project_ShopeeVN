@@ -31,8 +31,8 @@ export default function Product({ product }: Props) {
               <span>{formatCurrency(product.price_before_discount)}</span>
             </div>
             <div className="text-orange-500 truncate ml-1">
-              <span className="text">đ</span>
-              <span>{formatCurrency(product.price)}</span>
+              <span className="text-xs">đ</span>
+              <span className="tex-sm">{formatCurrency(product.price)}</span>
             </div>
           </div>
           <div className="mt-3 flex items-center justify-end">

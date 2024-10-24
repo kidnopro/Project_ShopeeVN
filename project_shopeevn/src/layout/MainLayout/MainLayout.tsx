@@ -10,7 +10,7 @@ export default function MainLayout({ children }: Props) {
   return (
     <div>
       <Header />
-      <Banner />
+      {/* <Banner /> */}
       {children}
       <Footer />
     </div>
