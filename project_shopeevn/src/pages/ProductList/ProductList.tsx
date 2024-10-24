@@ -4,13 +4,34 @@ import Product from "./Product/Product";
 import SortProductList from "./SortProductList";
 import useQueryParams from "../../hooks/useQueryParams";
 import productApi from "../../apis/product.api";
+import { omitBy, isUndefined } from "lodash";
+import { ProductListConfig } from "../../types/product.type";
+import Pagination from "../../components/Pagination/Paginate";
+
+export type QueryConfig = {
+  [key in keyof ProductListConfig]: string;
+};
 
 export default function ProductList() {
-  const queryParams = useQueryParams();
+  const queryParams: QueryConfig = useQueryParams();
+  const queryConfig: QueryConfig = omitBy(
+    {
+      page: queryParams.page || "1",
+      limit: queryParams.limit,
+      sort_by: queryParams.sort_by,
+      exclude: queryParams.exclude,
+      name: queryParams.name,
+      order: queryParams.order,
+      price_max: queryParams.price_max,
+      price_min: queryParams.price_min,
+      rating_filter: queryParams.rating_filter,
+    },
+    isUndefined
+  );
   const { data } = useQuery({
-    queryKey: ["products", queryParams],
+    queryKey: ["products", queryConfig],
     queryFn: () => {
-      return productApi.getProduct(queryParams);
+      return productApi.getProduct(queryConfig as ProductListConfig);
     },
   });
   console.log(data);
@@ -32,6 +53,7 @@ export default function ProductList() {
                   </div>
                 ))}
             </div>
+            <Pagination queryConfig={undefined} pageSize={0} />
           </div>
         </div>
       </div>

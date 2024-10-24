@@ -41,7 +41,7 @@ export default function Header() {
     logoutMutation.mutate();
   };
   return (
-    <div className="bg-[linear-gradient(-180deg,#f53d2d,#f63)] pb-5 pt-3 text-white">
+    <div className="bg-[linear-gradient(-180deg,#f53d2d,#f63)] pb-5 pt-3 text-white sticky top-0 bg-white z-50 ">
       <div className="container">
         <div className="flex justify-end">
           <Popover

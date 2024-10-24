@@ -5,7 +5,7 @@ export default function RegisterHeader() {
   const registerMatch = useMatch("/register");
   const isRegister = Boolean(registerMatch);
   return (
-    <header className="py-5 h-24 bg-white-400">
+    <header className="py-5 h-24 bg-white-400 sticky top-0 bg-white z-50 shadow-lg">
       <div className="max-w-7xl mx-auto flex justify-between items-center h-full px-4">
         <nav className="flex items-center">
           <Link to="/" className="flex items-center">
@@ -17,7 +17,7 @@ export default function RegisterHeader() {
           </div>
         </nav>
 
-        <Link to="/login" className="text-orange-500 flex items-center">
+        <Link to="/" className="text-orange-500 flex items-center">
           Bạn cần giúp đỡ?
         </Link>
       </div>
