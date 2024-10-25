@@ -4,7 +4,7 @@ import productApi from "../../apis/product.api";
 import { omitBy, isUndefined } from "lodash";
 import { ProductListConfig } from "../../types/product.type";
 import Pagination from "../../components/Pagination/Paginate";
-import categoryApi from "../../apis/catygory.api";
+import categoryApi from "../../apis/category.api";
 import AsideFilter from "./components/AsideFilter";
 import SortProductList from "./components/SortProductList";
 import Product from "./components/Product";

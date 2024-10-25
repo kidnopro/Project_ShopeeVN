@@ -1,6 +1,6 @@
 import { NonUndefined } from "react-hook-form";
 
-export interface SuccessReponse<Data> {
+export interface SuccessResponse<Data> {
   message: string;
   data: Data;
 }
