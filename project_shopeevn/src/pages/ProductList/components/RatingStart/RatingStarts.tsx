@@ -1,6 +1,6 @@
 import { createSearchParams, useNavigate } from "react-router-dom";
-import { QueryConfig } from "../ProductList";
-import path from "../../../constants/path";
+import { QueryConfig } from "../../ProductList";
+import path from "../../../../constants/path";
 
 interface Props {
   queryConfig: QueryConfig;

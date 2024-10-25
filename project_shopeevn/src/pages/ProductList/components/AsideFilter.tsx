@@ -10,7 +10,7 @@ import InputNumber from "../../../components/inputNumber";
 import Button from "../../../components/Button";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { NoUnderfinedField } from "../../../types/utils.type";
-import RatingStarts from "../RatingStart";
+import RatingStarts from "./RatingStart";
 
 interface Props {
   queryConfig: QueryConfig;
