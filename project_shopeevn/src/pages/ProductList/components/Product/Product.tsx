@@ -5,6 +5,7 @@ import {
   formatNumberToSocialStyle,
 } from "../../../../utils/utils";
 import ProductRating from "../../../../components/ProductRating";
+import path from "../../../../constants/path";
 
 interface Props {
   product: ProductType;
@@ -12,7 +13,7 @@ interface Props {
 
 export default function Product({ product }: Props) {
   return (
-    <Link to="/">
+    <Link to={`${path.home}${product._id}`}>
       <div className="bg-white shadow rounded-sm hover: translate-y-[-0.0625rem] hover:shadow-md duration-100 transition-transform">
         <div className="w-full pt-[100%] relative">
           <img

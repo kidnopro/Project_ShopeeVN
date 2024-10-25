@@ -119,9 +119,7 @@ export default function SortProductList({ queryConfig, pageSize }: Props) {
               )
             }
           >
-            <option selected className="bg-white text-black">
-              Giá
-            </option>
+            <option className="bg-white text-black">Giá</option>
             <option value={orderConstant.asc} className="bg-white text-black">
               Giá: Thấp đến cao
             </option>
