@@ -10,6 +10,7 @@ import InputNumber from "../../../components/inputNumber";
 import Button from "../../../components/Button";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { NoUnderfinedField } from "../../../types/utils.type";
+import RatingStarts from "../RatingStart";
 
 interface Props {
   queryConfig: QueryConfig;
@@ -21,7 +22,7 @@ type FormData = NoUnderfinedField<Pick<Schema, "price_max" | "price_min">>;
 const priceSchema = schema.pick(["price_min", "price_max"]);
 
 export default function AsideFilter({ queryConfig, categories }: Props) {
-  const { t } = useTranslation("home");
+  // const { t } = useTranslation("home");
   const { category } = queryConfig;
   const {
     control,
@@ -62,11 +63,11 @@ export default function AsideFilter({ queryConfig, categories }: Props) {
   };
 
   return (
-    <div className="py-4">
+    <div className="py-4 ml-14">
       <Link
         to={path.home}
         className={classNames("flex items-center font-bold", {
-          "text-orange": !category,
+          "text-orange-500": !category,
         })}
       >
         <svg viewBox="0 0 12 10" className="mr-3 h-4 w-3 fill-current">
@@ -82,7 +83,7 @@ export default function AsideFilter({ queryConfig, categories }: Props) {
             </g>
           </g>
         </svg>
-        {t("aside filter.all categories")}
+        {"aside filter.all categories"}
       </Link>
       <div className="my-4 h-[1px] bg-gray-300" />
       <ul>
@@ -99,13 +100,13 @@ export default function AsideFilter({ queryConfig, categories }: Props) {
                   }).toString(),
                 }}
                 className={classNames("relative px-2", {
-                  "font-semibold text-orange": isActive,
+                  "font-semibold text-orange-500": isActive,
                 })}
               >
                 {isActive && (
                   <svg
                     viewBox="0 0 4 7"
-                    className="absolute top-1 left-[-10px] h-2 w-2 fill-orange"
+                    className="absolute top-1 left-[-10px] h-2 w-2 fill-orange-500"
                   >
                     <polygon points="4 3.5 0 0 0 7" />
                   </svg>
@@ -137,7 +138,7 @@ export default function AsideFilter({ queryConfig, categories }: Props) {
             />
           </g>
         </svg>
-        {t("aside filter.filter search")}
+        {"aside filter.filter search"}
       </Link>
       <div className="my-4 h-[1px] bg-gray-300" />
       <div className="my-5">
@@ -190,18 +191,18 @@ export default function AsideFilter({ queryConfig, categories }: Props) {
           <div className="mt-1 min-h-[1.25rem] text-center text-sm text-red-600">
             {errors.price_min?.message}
           </div>
-          <Button className="flex w-full items-center justify-center bg-orange p-2 text-sm uppercase text-white hover:bg-orange/80">
+          <Button className="flex w-full items-center justify-center bg-orange-500 p-2 text-sm uppercase text-white hover:bg-orange-600">
             Áp dụng
           </Button>
         </form>
       </div>
       <div className="my-4 h-[1px] bg-gray-300" />
       <div className="text-sm">Đánh giá</div>
-      {/* <RatingStars queryConfig={queryConfig} /> */}
+      <RatingStarts queryConfig={queryConfig} />
       <div className="my-4 h-[1px] bg-gray-300" />
       <Button
         onClick={handleRemoveAll}
-        className="flex w-full items-center justify-center bg-orange p-2 text-sm uppercase text-white hover:bg-orange/80"
+        className="flex w-full items-center justify-center bg-orange-500 p-2 text-sm uppercase text-white hover:bg-orange-600"
       >
         Xóa tất cả
       </Button>
