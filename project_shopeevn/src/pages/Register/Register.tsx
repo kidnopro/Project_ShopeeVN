@@ -2,7 +2,6 @@ import { Link, useNavigate } from "react-router-dom";
 import Background from "../../assets/img/bg_login_register.jpg";
 import { useForm } from "react-hook-form";
 import Input from "../../components/Input";
-import { schema } from "../../utils/rules";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useMutation } from "@tanstack/react-query";
 import authApi from "../../apis/auth.api";
@@ -13,7 +12,10 @@ import { ErrorResponse } from "../../types/utils.type";
 import { useContext } from "react";
 import { AppContext } from "../../contexts/app.context";
 import Button from "../../components/Button";
-type FormData = Schema;
+import { schema } from "../../utils/rules";
+
+type FormData = Pick<Schema, "email" | "password" | "confirm_password">;
+const registerSchema = schema.pick(["email", "password", "confirm_password"]);
 
 export default function Register() {
   const { setIsAuthenticated, setProfile } = useContext(AppContext);
@@ -24,7 +26,7 @@ export default function Register() {
     setError,
     formState: { errors },
   } = useForm<FormData>({
-    resolver: yupResolver(schema),
+    resolver: yupResolver(registerSchema),
   });
 
   const registerAccountMutation = useMutation({
@@ -39,6 +41,7 @@ export default function Register() {
         setIsAuthenticated(true);
         setProfile(data.data.data.user);
         navigate("/");
+        alert("Đăng kí thành công");
       },
       onError: (error) => {
         if (

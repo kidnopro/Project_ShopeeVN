@@ -12,9 +12,8 @@ import { useContext } from "react";
 import { AppContext } from "../../contexts/app.context";
 import Button from "../../components/Button";
 
-type FormData = Omit<Schema, "confirm_password">;
-
-const loginSchema = schema.omit(["confirm_password"]);
+type FormData = Pick<Schema, "email" | "password">;
+const loginSchema = schema.pick(["email", "password"]);
 
 export default function Login() {
   const { setIsAuthenticated, setProfile } = useContext(AppContext);
@@ -39,6 +38,7 @@ export default function Login() {
         setIsAuthenticated(true);
         setProfile(data.data.data.user);
         navigate("/");
+        alert("Đăng nhập thành công");
       },
       onError: (error) => {
         if (isAxiosUnprocessableEntityError<ErrorResponse<FormData>>(error)) {
