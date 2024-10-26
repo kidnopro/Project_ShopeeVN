@@ -8,7 +8,5 @@ export default {
       },
     },
   },
-  plugins: [
-    require("@tailwindcss/line-clamp"), // Thêm plugin line-clamp
-  ],
+  plugins: [],
 };
