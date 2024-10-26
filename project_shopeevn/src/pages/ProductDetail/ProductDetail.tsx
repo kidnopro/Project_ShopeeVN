@@ -16,7 +16,7 @@ DOMPurify;
 
 export default function ProductDetail() {
   const { nameId } = useParams();
-  const id = getIdFromNameId(nameId as string);
+  const id = getIdFromNameId(nameId as string);                                                   
   const { data: productDetaiData } = useQuery({
     queryKey: ["product", id],
     queryFn: () => productApi.getProductDetail(id as string),

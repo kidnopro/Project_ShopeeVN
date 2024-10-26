@@ -1,32 +1,50 @@
-import { useContext, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useContext, useEffect, useRef, useState } from "react";
+import { createSearchParams, Link, useNavigate } from "react-router-dom";
 import Popover from "../Popover";
 import { useMutation } from "@tanstack/react-query";
 import authApi from "../../apis/auth.api";
 import { AppContext } from "../../contexts/app.context";
 import path from "../../constants/path";
+import useQueryConfig from "../../hooks/useQueryConfig";
+import { useForm } from "react-hook-form";
+import { schema, Schema } from "../../utils/rules";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { omit } from "lodash";
+
+type FormData = Pick<Schema, "name">;
+const nameSchema = schema.pick(["name"]);
 
 export default function Header() {
   const [placeholder, setPlaceholder] = useState(
     "Free Ship Đơn Từ 0Đ, Mua Hàng Ngay"
   );
-  const placeholders = [
+  const placeholdersRef = useRef([
     "VOUCHER Giảm 300.000Đ!",
     "Giảm Giá Tới 50%, Mua Ngay!",
     "Tìm Sản Phẩm Bạn Yêu Thích",
-  ];
+  ]);
   useEffect(() => {
     const interval = setInterval(() => {
       setPlaceholder((prev) => {
         const nextIndex =
-          (placeholders.indexOf(prev) + 1) % placeholders.length;
-        return placeholders[nextIndex];
+          (placeholdersRef.current.indexOf(prev) + 1) %
+          placeholdersRef.current.length;
+        return placeholdersRef.current[nextIndex];
       });
     }, 2000);
 
     return () => clearInterval(interval);
   }, []);
   // kết thúc đoạn này
+  const navigate = useNavigate();
+  const queryConfig = useQueryConfig();
+  const { register, handleSubmit } = useForm<FormData>({
+    defaultValues: {
+      name: "",
+    },
+    resolver: yupResolver(nameSchema),
+  });
+
   const { setIsAuthenticated, isAuthenticated, setProfile, profile } =
     useContext(AppContext);
 
@@ -40,6 +58,25 @@ export default function Header() {
   const handeLogout = () => {
     logoutMutation.mutate();
   };
+  // Tìm kiếm
+  const onSubmitSearch = handleSubmit((data) => {
+    const config = queryConfig.order
+      ? omit(
+          {
+            ...queryConfig,
+            name: data.name,
+          },
+          ["order", "sort_by"]
+        )
+      : {
+          ...queryConfig,
+          name: data.name,
+        };
+    navigate({
+      pathname: path.home,
+      search: createSearchParams(config).toString(),
+    });
+  });
   return (
     <div className="bg-[linear-gradient(-180deg,#f53d2d,#f63)] pb-5 pt-3 text-white sticky top-0 bg-white z-50 ">
       <div className="container">
@@ -154,12 +191,13 @@ export default function Header() {
             </g>
           </svg>
         </Link>
-        <form className="col-span-7">
+        <form className="col-span-7" onSubmit={onSubmitSearch}>
           <div className="flex rounded-sm bg-white p-1">
             <input
               type="text"
               className="flex-grow border-none bg-transparent px-3 py-2 text-black outline-none"
               placeholder={placeholder}
+              {...register("name")}
             />
             <button className="flex-shrink-0 rounded-sm bg-orange-600 py-2 px-6 hover:opacity-90">
               <svg

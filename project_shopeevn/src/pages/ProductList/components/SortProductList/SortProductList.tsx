@@ -6,7 +6,8 @@ import omit from "lodash/omit";
 import { ProductListConfig } from "../../../../types/product.type";
 import path from "../../../../constants/path";
 import { sortBy, order as orderConstant } from "../../../../constants/product";
-import { QueryConfig } from "../../ProductList";
+import { QueryConfig } from "../../../../hooks/useQueryConfig";
+
 interface Props {
   queryConfig: QueryConfig;
   pageSize: number;

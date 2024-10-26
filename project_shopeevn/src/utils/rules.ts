@@ -104,7 +104,7 @@ export const schema = yup.object({
     message: "Giá không phù hợp",
     test: testPriceMinMax,
   }),
-  name: yup.string().trim().required("Tên sản phẩm là bắt buộc"),
+  name: yup.string().trim().required("Đã tìm kiếm gì đâu mà search hả cụ nội!"),
 });
 
 export const userSchema = yup.object({
