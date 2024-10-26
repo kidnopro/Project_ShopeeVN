@@ -16,6 +16,7 @@ import {
   ProductListConfig,
 } from "../../types/product.type";
 import Product from "../ProductList/components/Product";
+// eslint-disable-next-line @typescript-eslint/no-unused-expressions
 DOMPurify;
 
 export default function ProductDetail() {
