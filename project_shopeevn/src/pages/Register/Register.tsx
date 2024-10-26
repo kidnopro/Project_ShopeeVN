@@ -13,7 +13,7 @@ import { useContext } from "react";
 import { AppContext } from "../../contexts/app.context";
 import Button from "../../components/Button";
 import { schema } from "../../utils/rules";
-
+// @ts-ignore
 type FormData = Pick<Schema, "email" | "password" | "confirm_password">;
 const registerSchema = schema.pick(["email", "password", "confirm_password"]);
 
@@ -26,11 +26,13 @@ export default function Register() {
     setError,
     formState: { errors },
   } = useForm<FormData>({
+    // @ts-ignore
     resolver: yupResolver(registerSchema),
   });
 
   const registerAccountMutation = useMutation({
     mutationFn: (body: Omit<FormData, "confirm_password">) =>
+      // @ts-ignore
       authApi.registerAccount(body),
   });
 
@@ -53,6 +55,7 @@ export default function Register() {
           if (formError) {
             Object.keys(formError).forEach((key) => {
               setError(key as keyof Omit<FormData, "confirm_password">, {
+                // @ts-ignore
                 message:
                   formError[key as keyof Omit<FormData, "confirm_password">],
                 type: "Server",
@@ -110,7 +113,9 @@ export default function Register() {
               <div className="mt-4">
                 <Button
                   className="flex w-full items-center justify-center bg-red-500 py-4 px-2 text-sm uppercase text-white hover:bg-red-600"
+                  // @ts-ignore
                   isLoading={registerAccountMutation.isLoading}
+                  // @ts-ignore
                   disabled={registerAccountMutation.isLoading}
                 >
                   Đăng ký

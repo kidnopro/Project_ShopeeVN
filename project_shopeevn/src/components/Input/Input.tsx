@@ -20,6 +20,7 @@ export default function Input({
   classNameError = "mt-2 text-red-600 min-h-[1.25rem].text0-sm",
   ...rest
 }: Props) {
+  // @ts-ignore
   const registerResult = register && name ? register(name, rules) : null;
   return (
     <div className={className}>

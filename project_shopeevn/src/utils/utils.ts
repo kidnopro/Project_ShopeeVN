@@ -32,7 +32,7 @@ export const rateSale = (original: number, sale: number) =>
   Math.round(((original - sale) / original) * 100) + "%";
 
 const removeSpecialCharacter = (str: string) =>
-  // eslint-disable-next-line no-useless-escape
+   
   // cái này dùng để đăng url lên
   str.replace(
     // eslint-disable-next-line no-useless-escape

@@ -2,15 +2,15 @@ import classNames from "classnames";
 import { createSearchParams, Link, useNavigate } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 import omit from "lodash/omit";
-import { Category } from "../../../types/category.type";
-import { schema, Schema } from "../../../utils/rules";
-import path from "../../../constants/path";
-import InputNumber from "../../../components/inputNumber";
-import Button from "../../../components/Button";
+import { Category } from "../../../../types/category.type";
+import { schema, Schema } from "../../../../utils/rules";
+import path from "../../../../constants/path";
+import InputNumber from "../../../../components/inputNumber";
+import Button from "../../../../components/Button";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { NoUnderfinedField } from "../../../types/utils.type";
-import RatingStarts from "./RatingStart";
-import { QueryConfig } from "../../../hooks/useQueryConfig";
+import { NoUnderfinedField } from "../../../../types/utils.type";
+import RatingStarts from "../RatingStart";
+import { QueryConfig } from "../../../../hooks/useQueryConfig";
 
 interface Props {
   queryConfig: QueryConfig;
@@ -34,6 +34,7 @@ export default function AsideFilter({ queryConfig, categories }: Props) {
       price_min: "",
       price_max: "",
     },
+    // @ts-ignore
     resolver: yupResolver(priceSchema),
   });
   const navigate = useNavigate();

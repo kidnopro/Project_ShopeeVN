@@ -92,7 +92,9 @@ export default function Login() {
                 <Button
                   type="submit"
                   className="flex w-full items-center justify-center bg-red-500 py-4 px-2 text-sm uppercase text-white hover:bg-red-600"
+                  // @ts-ignore
                   isLoading={loginMutation.isLoading}
+                  // @ts-ignore
                   disabled={loginMutation.isLoading}
                 >
                   Đăng nhập

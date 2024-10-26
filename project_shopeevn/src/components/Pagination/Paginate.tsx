@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import { Link, createSearchParams } from "react-router-dom";
 import path from "../../constants/path";
-import { QueryConfig } from "../../pages/ProductList/ProductList";
+import { QueryConfig } from "../../hooks/useQueryConfig";
 
 interface Props {
   queryConfig: QueryConfig;
@@ -48,7 +48,6 @@ export default function Pagination({ queryConfig, pageSize }: Props) {
       .map((_, index) => {
         const pageNumber = index + 1;
 
-        
         if (
           page <= RANGE * 2 + 1 &&
           pageNumber > page + RANGE &&

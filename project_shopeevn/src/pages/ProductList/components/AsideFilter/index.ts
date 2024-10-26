@@ -1,3 +1,3 @@
-import AsideFilter from "../../ProductList/components/AsideFilter";
+import AsideFilter from "./AsideFilter";
 
 export default AsideFilter;
