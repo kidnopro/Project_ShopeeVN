@@ -11,12 +11,16 @@ import {
 import InputNumber from "../../components/inputNumber/inputNumber";
 import DOMPurify from "dompurify";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Product } from "../../types/product.type";
+import {
+  Product as ProductType,
+  ProductListConfig,
+} from "../../types/product.type";
+import Product from "../ProductList/components/Product";
 DOMPurify;
 
 export default function ProductDetail() {
   const { nameId } = useParams();
-  const id = getIdFromNameId(nameId as string);                                                   
+  const id = getIdFromNameId(nameId as string);
   const { data: productDetaiData } = useQuery({
     queryKey: ["product", id],
     queryFn: () => productApi.getProductDetail(id as string),
@@ -30,6 +34,21 @@ export default function ProductDetail() {
     () => (product ? product.images.slice(...currentIndexImages) : []),
     [product, currentIndexImages]
   );
+  // sản phẩm tương tự
+  const queryConfig: ProductListConfig = {
+    limit: "6",
+    page: "1",
+    category: product?.category._id,
+  };
+  const { data: productsData } = useQuery({
+    queryKey: ["products", queryConfig],
+    queryFn: () => {
+      return productApi.getProduct(queryConfig);
+    },
+    staleTime: 3 * 60 * 1000,
+    enabled: Boolean(product),
+  });
+  console.log(productsData);
 
   useEffect(() => {
     if (product && product.images.length > 0) {
@@ -37,7 +56,7 @@ export default function ProductDetail() {
     }
   }, [product]);
   const next = () => {
-    if (currentIndexImages[1] < (product as Product)?.images.length) {
+    if (currentIndexImages[1] < (product as ProductType)?.images.length) {
       setcurrentIndexImages((prev) => [prev[0] + 1, prev[1] + 1]);
     }
   };
@@ -267,6 +286,23 @@ export default function ProductDetail() {
               }}
             ></div>
           </div>
+        </div>
+      </div>
+      {/* Sản phẩm tương tự */}
+      <div className="mt-8">
+        <div className="container">
+          <div className="rouded bg-gray-300 p-4 text-lg capitalize text-black-300">
+            Sản phẩm liên quan
+          </div>
+          {productsData && (
+            <div className="mt-6 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 gap-3">
+              {productsData.data.data.products.map((product) => (
+                <div className="col-span-1" key={product._id}>
+                  <Product product={product} />
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </div>

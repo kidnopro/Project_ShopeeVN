@@ -2,7 +2,6 @@ import classNames from "classnames";
 import { createSearchParams, Link, useNavigate } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 import omit from "lodash/omit";
-import { QueryConfig } from "../ProductList";
 import { Category } from "../../../types/category.type";
 import { schema, Schema } from "../../../utils/rules";
 import path from "../../../constants/path";
@@ -11,6 +10,7 @@ import Button from "../../../components/Button";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { NoUnderfinedField } from "../../../types/utils.type";
 import RatingStarts from "./RatingStart";
+import { QueryConfig } from "../../../hooks/useQueryConfig";
 
 interface Props {
   queryConfig: QueryConfig;
