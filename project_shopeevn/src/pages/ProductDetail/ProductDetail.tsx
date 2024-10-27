@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import productApi from "../../apis/product.api";
 import ProductRating from "../../components/ProductRating";
@@ -16,6 +16,10 @@ import {
 } from "../../types/product.type";
 import Product from "../ProductList/components/Product";
 import QuantityController from "../../components/QuantityController";
+import purchaseApi from "../../apis/pucharse.api";
+import { toast } from "react-toastify";
+import { queryClient } from "../../main";
+import { purchasesStatus } from "../../constants/purchase";
 // eslint-disable-next-line @typescript-eslint/no-unused-expressions
 DOMPurify;
 
@@ -50,6 +54,8 @@ export default function ProductDetail() {
     staleTime: 3 * 60 * 1000,
     enabled: Boolean(product),
   });
+
+  const addToCartMutation = useMutation(purchaseApi.addToCart);
 
   useEffect(() => {
     if (product && product.images.length > 0) {
@@ -91,6 +97,19 @@ export default function ProductDetail() {
   };
   const handleBuyCount = (value: number) => {
     setBuyCount(value);
+  };
+  const addToCart = () => {
+    addToCartMutation.mutate(
+      { buy_count: buyCount, product_id: product?._id as string },
+      {
+        onSuccess: (data) => {
+          toast.success(data.data.message, { autoClose: 1000 });
+          queryClient.invalidateQueries({
+            queryKey: ["purchases", { status: purchasesStatus.inCart }],
+          });
+        },
+      }
+    );
   };
   if (!product) return null;
   return (
@@ -216,7 +235,10 @@ export default function ProductDetail() {
                 </div>
               </div>
               <div className="mt-8 flex items-center">
-                <button className="flex h-12 items-center justify-center rounded-sm border border-orange-500 bg-orange/10 px-5 capitalize text-orange-500 shadow-sm hover:bg-black-500">
+                <button
+                  className="flex h-12 items-center justify-center rounded-sm border border-orange-500 bg-orange/10 px-5 capitalize text-orange-500 shadow-sm hover:bg-black-500"
+                  onClick={addToCart}
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
