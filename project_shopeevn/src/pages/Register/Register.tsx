@@ -32,6 +32,7 @@ export default function Register() {
 
   const registerAccountMutation = useMutation({
     mutationFn: (body: Omit<FormData, "confirm_password">) =>
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       authApi.registerAccount(body),
   });
